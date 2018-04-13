@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Monolog hook implementations.
+ */
+
+/**
+ * Implements hook_monolog_handler_path().
+ */
+function rdg_monolog_monolog_handler_path() {
+  return 'handlers';
+}
+
+/**
+ * Implements hook_monolog_handler_info().
+ */
+function rdg_monolog_monolog_handler_info() {
+  $handlers = array();
+
+  $handlers['rdg_rotating_file_json'] = array(
+    'label' => t('RDG Rotating File Handler - JSON'),
+    'description' => t('Logs records to a file and creates one logfile per day. It will also delete files older than the "Max Files" settings.'),
+    'group' => t('Files and syslog'),
+    'default settings' => array(
+      'filepath' => 'private://log/drupal.log',
+      'max_files' => 0,
+    ),
+  );
+
+  $handlers['rdg_error_log_json'] = array(
+    'label' => t('RDG ErrorLogHandler Handler - JSON'),
+    'description' => t('Handler for ErrorLogHandler, logging records to PHP\'s error_log() function.'),
+    'group' => t('Development'),
+    'settings callback' => FALSE,
+  );
+
+  return $handlers;
+}
